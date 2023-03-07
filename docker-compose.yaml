@@ -1,11 +1,9 @@
-version: '3'
+version: '2'
 
 services:
   redis:
     image: redis:alpine
     command: --save 900 1
-    volumes:
-      - ./data/redis:/data
     restart: on-failure:5
     network_mode: "host"
   ntopng:
@@ -13,8 +11,6 @@ services:
       context: ntop
       dockerfile: Dockerfile
     command: ntopng -r localhost:6379 -d /ntopngcustom
-    volumes:
-      - ./data/ntopng:/var/lib/ntopng
     restart: on-failure:5
     network_mode: "host"
     depends_on:
